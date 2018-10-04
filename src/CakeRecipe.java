@@ -7,17 +7,18 @@ class CakeRecipe {
   double eggs;
   double butter;
   double milk; // weights in ounces
+  boolean areVolumes;
 
   // constructor that represents as the amount of flour, sugar, eggs, butter and
   // milk in the recipe
   CakeRecipe(double flour, double sugar, double eggs, double butter, double milk) {
-    if (!(Math.abs(flour - sugar) <= 0.001)) {
+    if (Math.abs(flour - sugar) > 0.001) {
       throw new IllegalArgumentException("Weight of flour must be equal to weight of sugar.");
     }
-    if (!(Math.abs(eggs - butter) <= 0.001)) {
+    if (Math.abs(eggs - butter) > 0.001) {
       throw new IllegalArgumentException("Weight of eggs must be equal to weight of butter.");
     }
-    if (!((Math.abs(eggs + milk) - sugar) <= 0.001)) {
+    if (Math.abs(eggs + milk - sugar) > 0.001) {
       throw new IllegalArgumentException(
           "Weight of eggs plus the weight of milk must equal the weight of sugar.");
     }
@@ -26,6 +27,7 @@ class CakeRecipe {
     this.eggs = eggs;
     this.butter = butter;
     this.milk = milk;
+    this.areVolumes = false;
   }
 
   // constructor that only requires one to enter the amount of flour, eggs and
@@ -45,11 +47,22 @@ class CakeRecipe {
       this.eggs = eggs * 1.75;
       this.butter = eggs * 8;
       this.milk = milk * 8;
+      this.areVolumes = true;
     }
   }
 
   // detects if the two CakeRecipes are the same
   boolean sameRecipe(CakeRecipe other) {
+//    if (other.areVolumes && !this.areVolumes) {
+//      return Math.abs(this.flour - other.flour / 4.25) <= .001 && Math.abs(this.sugar - other.sugar / 7) <= .001
+//          && Math.abs(this.eggs - other.eggs / 1.75) <= .001 && Math.abs(this.butter - other.butter / 8) <= .001
+//          && Math.abs(this.milk - other.milk / 8) <= .001;
+//    }
+//    if (this.areVolumes && !other.areVolumes) {
+//      return Math.abs(this.flour / 4.25 - other.flour) <= .001 && Math.abs(this.sugar / 7 - other.sugar) <= .001
+//          && Math.abs(this.eggs / 1.75 - other.eggs) <= .001 && Math.abs(this.butter / 8 - other.butter) <= .001
+//          && Math.abs(this.milk / 8 - other.milk) <= .001;
+//    }
     return Math.abs(this.flour - other.flour) <= .001 && Math.abs(this.sugar - other.sugar) <= .001
         && Math.abs(this.eggs - other.eggs) <= .001 && Math.abs(this.butter - other.butter) <= .001
         && Math.abs(this.milk - other.milk) <= .001;
